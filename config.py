@@ -14,4 +14,4 @@ HOVER = "#3a3a55"
 TEXT = "#ffffff"
 CARD = "#2f2f45"
 PLACEHOLDER = "#9aa0a6"
-BASE_DIR=os.path.abspath("final\\notes")
+BASE_DIR=os.path.abspath("./notes")

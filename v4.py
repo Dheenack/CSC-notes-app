@@ -1,21 +1,16 @@
-try:
-    from ctypes import windll
-    windll.shcore.SetProcessDpiAwareness(1)
-except Exception:
-    pass
 import tkinter as tk
 from FileHandler import FileHandler
-
+from config import *
 f = FileHandler()
 
-# -------- THEME --------
-BG = "#1e1e2f"
-SIDEBAR = "#252538"
-ACTIVE = "#4e73df"
-HOVER = "#3a3a55"
-TEXT = "#ffffff"
-CARD = "#2f2f45"
-PLACEHOLDER = "#9aa0a6"
+# # -------- THEME --------
+# BG = "#1e1e2f"
+# SIDEBAR = "#252538"
+# ACTIVE = "#4e73df"
+# HOVER = "#3a3a55"
+# TEXT = "#ffffff"
+# CARD = "#2f2f45"
+# PLACEHOLDER = "#9aa0a6"
 
 class NotesApp:
     def __init__(self, root):
@@ -313,6 +308,3 @@ class NotesApp:
 
 
 # -------- RUN --------
-root = tk.Tk()
-app = NotesApp(root)
-root.mainloop()
