@@ -1,7 +1,7 @@
 import tkinter as tk
 from FileHandler import FileHandler
 from config import *
-f = FileHandler()
+f = FileHandler(BASE_DIR)
 
 # # -------- THEME --------
 # BG = "#1e1e2f"

@@ -1,0 +1,16 @@
+{
+    "THEME": {
+        "BG": "#1e1e2f",
+        "SIDEBAR": "#252538",
+        "ACTIVE": "#4e73df",
+        "HOVER": "#3a3a55",
+        "TEXT": "#ffffff",
+        "CARD": "#2f2f45",
+        "PLACEHOLDER": "#9aa0a6"
+    },
+    "SETTINGS": {
+        "BASE_DIR": "B:/csc/csc-notes/APP/final/notes",
+        "APP_TITLE": "Notes App - CSC",
+        "WINDOW_SIZE": "950x600"
+    }
+}
