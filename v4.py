@@ -3,15 +3,6 @@ from FileHandler import FileHandler
 from config import *
 f = FileHandler(BASE_DIR)
 
-# # -------- THEME --------
-# BG = "#1e1e2f"
-# SIDEBAR = "#252538"
-# ACTIVE = "#4e73df"
-# HOVER = "#3a3a55"
-# TEXT = "#ffffff"
-# CARD = "#2f2f45"
-# PLACEHOLDER = "#9aa0a6"
-
 class NotesApp:
     def __init__(self, root):
         self.root = root
@@ -207,51 +198,113 @@ class NotesApp:
         self.render_files(filtered)
 
     # -------- TOPICS --------
+    # def show_topics(self, lang):
+    #     self.clear_main()
+
+    #     tk.Label(
+    #         self.main,
+    #         text=f"{lang.upper()} Topics",
+    #         bg=BG,
+    #         fg=TEXT,
+    #         font=("Segoe UI", 18, "bold")
+    #     ).pack(pady=(15, 5))
+
+    #     # Search bar
+    #     self.search_var = tk.StringVar()
+    #     search = tk.Entry(
+    #         self.main,
+    #         textvariable=self.search_var,
+    #         font=("Segoe UI", 11),
+    #         relief="flat",
+    #         bd=10
+    #     )
+    #     search.pack(pady=10, padx=20, fill="x")
+
+    #     self.add_placeholder(search, "Search topics...")
+    #     search.bind("<KeyRelease>", self.filter_files)
+
+    #     # Scroll area
+    #     container = tk.Frame(self.main, bg=BG)
+    #     container.pack(fill="both", expand=True)
+
+    #     canvas = tk.Canvas(container, bg=BG, highlightthickness=0)
+    #     scrollbar = tk.Scrollbar(container, command=canvas.yview)
+
+    #     self.content = tk.Frame(canvas, bg=BG)
+
+    #     self.content.bind(
+    #         "<Configure>",
+    #         lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+    #     )
+
+    #     canvas.create_window((0, 0), window=self.content, anchor="nw")
+    #     canvas.configure(yscrollcommand=scrollbar.set)
+
+    #     canvas.pack(side="left", fill="both", expand=True)
+    #     scrollbar.pack(side="right", fill="y")
+
+    #     self.all_files = f.list_topics(lang)
+    #     self.render_files(self.all_files)
     def show_topics(self, lang):
         self.clear_main()
+        self.active_lang = lang
 
+        # 1. Header Section (Stretches horizontally)
         tk.Label(
             self.main,
             text=f"{lang.upper()} Topics",
-            bg=BG,
-            fg=TEXT,
+            bg=BG, fg=TEXT,
             font=("Segoe UI", 18, "bold")
-        ).pack(pady=(15, 5))
+        ).pack(pady=(15, 5), fill="x")
 
-        # Search bar
+        # 2. Search Bar (Responsive width with side padding)
         self.search_var = tk.StringVar()
         search = tk.Entry(
             self.main,
             textvariable=self.search_var,
             font=("Segoe UI", 11),
+            bg=CARD, fg=TEXT,
+            insertbackground=TEXT,
             relief="flat",
             bd=10
         )
-        search.pack(pady=10, padx=20, fill="x")
-
+        search.pack(pady=10, padx=40, fill="x")
         self.add_placeholder(search, "Search topics...")
         search.bind("<KeyRelease>", self.filter_files)
 
-        # Scroll area
+        # 3. Responsive Scroll Area Container
         container = tk.Frame(self.main, bg=BG)
-        container.pack(fill="both", expand=True)
+        container.pack(fill="both", expand=True, padx=20)
 
         canvas = tk.Canvas(container, bg=BG, highlightthickness=0)
         scrollbar = tk.Scrollbar(container, command=canvas.yview)
-
+        
+        # This is the inner frame that holds the cards
         self.content = tk.Frame(canvas, bg=BG)
 
+        # --- RESPONSIVENESS LOGIC ---
+        # A. Update the scrollable area when widgets are added
         self.content.bind(
             "<Configure>",
             lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
         )
 
-        canvas.create_window((0, 0), window=self.content, anchor="nw")
-        canvas.configure(yscrollcommand=scrollbar.set)
+        # B. THIS IS THE KEY: Force the inner frame to always match the canvas width
+        canvas_window = canvas.create_window((0, 0), window=self.content, anchor="nw")
+        canvas.bind(
+            "<Configure>",
+            lambda e: canvas.itemconfig(canvas_window, width=e.width)
+        )
+        # ----------------------------
 
+        canvas.configure(yscrollcommand=scrollbar.set)
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
 
+        # Mousewheel support for Windows
+        canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(int(-1*(e.delta/120)), "units"))
+
+        # Initial Render
         self.all_files = f.list_topics(lang)
         self.render_files(self.all_files)
 

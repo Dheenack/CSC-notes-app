@@ -19,7 +19,7 @@ class NotesApp:
         self.root = root
         self.root.title("Notes App - CSC")
         self.root.geometry("950x600")
-        self.f = FileHandler()
+        self.f = FileHandler(BASE_DIR)
 
         self.sidebar = None
         self.main_container = tk.Frame(self.root, bg=BG)

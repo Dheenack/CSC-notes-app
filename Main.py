@@ -1,5 +1,5 @@
 # from UI.UI import *
-from v4 import *
+from v5 import *
 # -------- RUN --------
 root = tk.Tk()
 app = NotesApp(root)
